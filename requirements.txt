@@ -1,0 +1,6 @@
+lightning
+lightning[extra]
+transformers
+torch
+torchvision
+pypinyin
