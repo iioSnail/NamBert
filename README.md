@@ -62,6 +62,8 @@ sh finetune.sh
 
 ## Inference
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/iioSnail/NamBert/blob/master/example.ipynb)
+
 You can use our final model by [Hugging face](https://huggingface.co/iioSnail/NamBert-for-csc). For example:
 
 ```python
@@ -77,4 +79,20 @@ target_ids = logits.argmax(-1)
 target_ids = tokenizer.restore_ids(target_ids, inputs['input_ids'])
 
 print(''.join(tokenizer.convert_ids_to_tokens(target_ids[0, 1:-1])))
+```
+
+If you would just like to use our model to predict, we recommend you use the predict method. For example:
+
+```python
+from transformers import AutoTokenizer, AutoModel
+
+tokenizer = AutoTokenizer.from_pretrained("iioSnail/NamBert-for-csc", trust_remote_code=True)
+model = AutoModel.from_pretrained("iioSnail/NamBert-for-csc", trust_remote_code=True)
+
+model = model.to(device)
+model = model.eval()
+model.set_tokenizer(tokenizer)
+
+model.predict("我是炼习时长两念半的个人练习生菜徐坤")
+model.predict(["我是炼习时长两念半的个人练习生菜徐坤", "喜欢场跳rap篮球！！"])
 ```
